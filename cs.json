@@ -1,0 +1,86 @@
+{
+    "consentModal": {
+        "title": "Používáme cookies",
+        "description": "Tato stránka používá cookies, které nám pomáhají ke zkvalitňování obsahu. <button type=\"button\" data-cc=\"c-settings\" class=\"cc-link\">Přizpůsobit</button>",
+        "acceptAllBtn": "Přijmout vše",
+        "acceptNecessaryBtn": "Odmítnout vše",
+        "showPreferencesBtn": "Spravovat nastavení",
+        "footer": "<a href=\"#path-to-impressum.html\" target=\"_blank\">Impressum</a> <a href=\"#path-to-privacy-policy.html\" target=\"_blank\">Privacy Policy</a>"
+    },
+    "preferencesModal": {
+        "title": "Nastavení cookies",
+        "acceptAllBtn": "Přijmout vše",
+        "acceptNecessaryBtn": "Odmítnout vše",
+        "savePreferencesBtn": "Uložit nastavení",
+        "closeIconLabel": "Zavřít",
+        "sections": [
+            {
+                "title": "Použití cookies 📢",
+                "description": "Používáme cookies k zajištění základních funkcí webu a ke zkvalitňování poskytovaného obsahu. Můžete si vybrat nastavení pro každou kategorii zvlášť. Pro více informací spojených s cookies a dalších citlivých dat si prosím přečtěte plné znění <a href=\"zasady-ochrany-osobnich-udaju\" class=\"cc-link\">zásad ochrany osobních údajů</a>."
+            },
+            {
+                "title": "Nezbytné cookies",
+                "description": "Tyto cookies jsou nezbytné pro správné fungování webu.",
+                "linkedCategory": "necessary"
+            },
+            {
+                "title": "Analytické cookies",
+                "description": "Tyto cookies slouží k analyzování chování uživatelů na našem webu.",
+                "linkedCategory": "analytics",
+                "cookieTable": {
+                    "headers": {
+                        "name": "Název",
+                        "domain": "Služba",
+                        "description": "Popis",
+                        "expiration": "Expirace"
+                    },
+                    "body": [
+                        {
+                            "name": "_ga",
+                            "domain": "Google Analytics",
+                            "description": "Cookie nastavená <a href=\"#das\">Google Analytics</a>.",
+                            "expiration": "Vyprší po 12 dnech"
+                        },
+                        {
+                            "name": "_gid",
+                            "domain": "Google Analytics",
+                            "description": "Cookie nastavená <a href=\"#das\">Google Analytics</a>",
+                            "expiration": "Návštěva"
+                        }
+                    ]
+                }
+            },
+            {
+                "title": "Marketingové cookies",
+                "description": "Tyto cookies sbírají informace o tom, jak používáte náš web, které příspěvky jste navštívili a na jaké odkazy jste klikli. Všechna data jsou anonymizována a nemohou být využita k identifikaci jednotlivých uživatelů.",
+                "linkedCategory": "targeting",
+                "cookieTable": {
+                    "headers": {
+                        "name": "Název",
+                        "domain": "Služba",
+                        "description": "Popis",
+                        "expiration": "Expirace"
+                    },
+                    "body": [
+                        {
+                            "name": "_ga",
+                            "domain": "Google Analytics",
+                            "description": "Cookie nastavená <a href=\"#das\">Google Analytics</a>.",
+                            "expiration": "Vyprší po 12 dnech"
+                        },
+                        {
+                            "name": "_gid",
+                            "domain": "Google Analytics",
+                            "description": "Cookie nastavená <a href=\"#das\">Google Analytics</a>",
+                            "expiration": "Návštěva"
+                        }
+                    ]
+                }
+            },
+            {
+                "title": "Více informací",
+                "description": "Pro jakékoli dotazy, týkající se našich zásad ohledně cookies, nás prosím <a class=\"cc-link\" href=\"kontakt#contact-form\">kontaktujte</a>."
+            }
+        ]
+    }
+}
