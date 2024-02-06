@@ -113,8 +113,8 @@ CookieConsent.run({
     language: {
         default: 'cs',
         translations: {
-            en: './en.json',
-            cs: './cs.json'
+            en: 'https://cdn.jsdelivr.net/gh/TechnicalObject/caspone/en.json',
+            cs: 'https://cdn.jsdelivr.net/gh/TechnicalObject/caspone/cs.json'
         }
     }
 });
