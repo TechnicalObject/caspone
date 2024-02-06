@@ -11,11 +11,10 @@ gtag('consent', 'default', {
 // load GTM
 const envPartTest = document.currentScript.getAttribute('env') || '';
 const gtmId = document.currentScript.getAttribute('gtmid') || '';
-const domainPrefix = document.currentScript.getAttribute('domainprefix') || '';
+const hostName = document.currentScript.getAttribute('hostname') || '';
 let envPart = '';
-const hostName = window.location.host;
-const found = hostName.includes(domainPrefix);
-if (found) {
+const currentHostName = window.location.host;
+if (currentHostName != hostName) {
     envPart = envPartTest;
 }
 (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
