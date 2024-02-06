@@ -6,7 +6,7 @@ import 'https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v3.0.0/dist/cookieco
 
 function consentUpdate(cookie) {
     let consentLevel = cookie["categories"];
-    let adStorage = consentLevel.includes("targeting") ? "granted" : "denied";
+    let adStorage = consentLevel.includes("ads") ? "granted" : "denied";
     let analyticsStorage = consentLevel.includes("analytics") ? "granted" : "denied";
     let adUserData = consentLevel.includes("ads") ? "granted" : "denied";
     let adPersonalization = consentLevel.includes("ads") ? "granted" : "denied";
@@ -55,7 +55,7 @@ CookieConsent.run({
     },
 
     onConsent: ({cookie}) => {
-        console.log('onConsent fired!', cookie.categories);
+        console.log('onConsent fired!', cookie['categories']);
         consentUpdate(cookie);
     },
 
