@@ -55,7 +55,7 @@ CookieConsent.run({
     },
 
     onConsent: ({cookie}) => {
-        console.log('onConsent fired!', cookie);
+        console.log('onConsent fired!', cookie.categories);
         consentUpdate(cookie);
     },
 
