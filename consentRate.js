@@ -14,7 +14,7 @@ function consentUpdate(cookie) {
 
 
 const measurement_id = `G-XCZFYWEYWC`;
-const api_secret = `MDn3a97oQNiIavUi8bEFEw`;
+const api_secret = ``;
 
 fetch(`https://www.google-analytics.com/mp/collect?measurement_id=${measurement_id}&api_secret=${api_secret}`, {
   method: "POST",
