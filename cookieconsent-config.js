@@ -8,8 +8,8 @@ function consentUpdate(cookie) {
     let consentLevel = cookie["categories"];
     let adStorage = consentLevel.includes("targeting") ? "granted" : "denied";
     let analyticsStorage = consentLevel.includes("analytics") ? "granted" : "denied";
-    let adUserData = consentLevel.includes("targeting") ? "granted" : "denied";
-    let adPersonalization = consentLevel.includes("targeting") ? "granted" : "denied";
+    let adUserData = consentLevel.includes("ads") ? "granted" : "denied";
+    let adPersonalization = consentLevel.includes("ads") ? "granted" : "denied";
     gtag('consent', 'update', {
         ad_storage: adStorage,
         analytics_storage: analyticsStorage,
@@ -107,7 +107,7 @@ CookieConsent.run({
                 },
             }
         },
-        targeting: {}
+        ads: {}
     },
 
     language: {
