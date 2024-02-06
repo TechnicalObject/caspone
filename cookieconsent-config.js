@@ -5,7 +5,7 @@
 import 'https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v3.0.0/dist/cookieconsent.umd.js';
 
 function consentUpdate(cookie) {
-    let consentLevel = cookie["level"];
+    let consentLevel = cookie["categories"];
     let adStorage = consentLevel.includes("targeting") ? "granted" : "denied";
     let analyticsStorage = consentLevel.includes("analytics") ? "granted" : "denied";
     let adUserData = consentLevel.includes("targeting") ? "granted" : "denied";
@@ -107,7 +107,7 @@ CookieConsent.run({
                 },
             }
         },
-        ads: {}
+        targeting: {}
     },
 
     language: {
