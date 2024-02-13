@@ -21,7 +21,29 @@
             {
                 "title": "Nezbytné cookies",
                 "description": "Tyto cookies jsou nezbytné pro správné fungování webu.",
-                "linkedCategory": "necessary"
+                "linkedCategory": "necessary",
+                "cookieTable": {
+                    "headers": {
+                        "name": "Název",
+                        "domain": "Služba",
+                        "description": "Popis",
+                        "expiration": "Expirace"
+                    },
+                    "body": [
+                        {
+                            "name": "cc_cookie",
+                            "domain": "Google Analytics",
+                            "description": "Cookie nastavená <a href=\"#das\">Google Analytics</a>.",
+                            "expiration": "Vyprší po 12 dnech"
+                        },
+                        {
+                            "name": "_gid",
+                            "domain": "Google Analytics",
+                            "description": "Cookie nastavená <a href=\"#das\">Google Analytics</a>",
+                            "expiration": "Návštěva"
+                        }
+                    ]
+                }
             },
             {
                 "title": "Analytické cookies",
@@ -53,7 +75,7 @@
             {
                 "title": "Marketingové cookies",
                 "description": "Tyto cookies sbírají informace o tom, jak používáte náš web, které příspěvky jste navštívili a na jaké odkazy jste klikli. Všechna data jsou anonymizována a nemohou být využita k identifikaci jednotlivých uživatelů.",
-                "linkedCategory": "targeting",
+                "linkedCategory": "marketing",
                 "cookieTable": {
                     "headers": {
                         "name": "Název",
@@ -64,7 +86,7 @@
                     "body": [
                         {
                             "name": "_ga",
-                            "domain": "Google Analytics",
+                            "domain": "Google Ads",
                             "description": "Cookie nastavená <a href=\"#das\">Google Analytics</a>.",
                             "expiration": "Vyprší po 12 dnech"
                         },
