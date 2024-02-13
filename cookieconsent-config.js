@@ -18,6 +18,19 @@ function consentUpdate(cookie) {
     });
 }
 
+async function getCloudflareJSON(endpoint){
+    let data = await fetch(endpoint).then(res=>res.text());
+    let arr = data.trim().split('\n').map(e=>e.split('='));
+    let res = Object.fromEntries(arr);
+    return res.loc;
+}
+let cntryCode;
+await getCloudflareJSON('https://1.1.1.1/cdn-cgi/trace').then(data => (cntryCode = data));
+let EEAregions = ['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IS','IE','IT','LV','LI','LT','LU','MT','NL','NO','PL','PT','RO','SK','SI','ES','SE'];
+// let noticeRegions = ['US','JP','CN','KR'];
+// let bannerType;
+// let dynamicMode = 'opt-in';
+if (EEAregions.includes(cntryCode)) {
 CookieConsent.run({
 
     // root: 'body',
