@@ -72,7 +72,7 @@ if (EEAregions.includes(cntryCode)) {
             consentUpdate(cookie);
         },
     
-        onChange: ({changedCategories, changedServices}) => {
+        onChange: ({cookie, changedCategories, changedServices}) => {
             console.log('onChange fired!', changedCategories, changedServices);
             consentUpdate(cookie);
         },
@@ -152,7 +152,7 @@ if (EEAregions.includes(cntryCode)) {
             default: 'cs',
             translations: {
                 en: 'https://cdn.jsdelivr.net/gh/TechnicalObject/caspone@main/en.json',
-                cs: 'cs.json' // https://cdn.jsdelivr.net/gh/TechnicalObject/caspone@main/cs.json
+                cs: 'https://cdn.jsdelivr.net/gh/TechnicalObject/caspone@main/cs.json'
             }
         }
     });
