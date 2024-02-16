@@ -3,6 +3,7 @@
  * https://cookieconsent.orestbida.com/reference/configuration-reference.html
  */
 import 'https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v3.0.0/dist/cookieconsent.umd.js';
+const currentTag = document.currentScript.getAttribute('tag') || 'latest';
 
 function consentUpdate(cookie) {
     let consentLevel = cookie["categories"];
@@ -138,8 +139,8 @@ const ccObj = {
         language: {
             default: 'cs',
             translations: {
-                en: 'https://cdn.jsdelivr.net/gh/TechnicalObject/caspone@main/en.json',
-                cs: 'https://cdn.jsdelivr.net/gh/TechnicalObject/caspone@main/cs.json'
+                en: `https://cdn.jsdelivr.net/gh/TechnicalObject/caspone@${currentTag}/en.json`,
+                cs: `https://cdn.jsdelivr.net/gh/TechnicalObject/caspone@${currentTag}/cs.json`
             }
         }
     };
