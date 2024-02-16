@@ -79,16 +79,16 @@
                     },
                     "body": [
                         {
-                            "name": "_ga",
-                            "domain": "Google Ads",
-                            "description": "Cookie nastavená <a href=\"#das\">Google Analytics</a>.",
-                            "expiration": "Vyprší po 12 dnech"
+                            "name": "_gcl_au",
+                            "domain": "Partnerská doména",
+                            "description": "Cookie nastavená <a href=\"#das\">Google Ads</a>.",
+                            "expiration": "30 dní"
                         },
                         {
-                            "name": "_gid",
-                            "domain": "Google Analytics",
-                            "description": "Cookie nastavená <a href=\"#das\">Google Analytics</a>",
-                            "expiration": "Návštěva"
+                            "name": "NID",
+                            "domain": "google.com a lokální varianty, např. google.cz",
+                            "description": "Cookie nastavená <a href=\"#das\">Google Ads</a>",
+                            "expiration": "6 měsiců"
                         }
                     ]
                 }

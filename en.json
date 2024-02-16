@@ -30,7 +30,7 @@
                 "cookieTable": {
                     "headers": {
                         "name": "Name",
-                        "domain": "Service",
+                        "domain": "Domain",
                         "description": "Description",
                         "expiration": "Expiration"
                     },
@@ -46,6 +46,33 @@
                             "domain": "Google Analytics",
                             "description": "Cookie set by <a href=\"#das\">Google Analytics</a>",
                             "expiration": "Session"
+                        }
+                    ]
+                }
+            },
+            {
+                "title": "Advertisement and Targeting cookies",
+                "description": "These cookies collect information about how you use the website, which pages you visited and which links you clicked on. All of the data is anonymized and cannot be used to identify you",
+                "linkedCategory": "marketing",
+                "cookieTable": {
+                    "headers": {
+                        "name": "Name",
+                        "domain": "Domain",
+                        "description": "Description",
+                        "expiration": "Expiration"
+                    },
+                    "body": [
+                        {
+                            "name": "_gcl_au",
+                            "domain": "Partner domains",
+                            "description": "Cookie set by <a href=\"#das\">Google Ads</a>.",
+                            "expiration": "30 days"
+                        },
+                        {
+                            "name": "NID",
+                            "domain": "google.com a local variants, e.g. google.de",
+                            "description": "Cookie set by <a href=\"#das\">Google Ads</a>",
+                            "expiration": "6 months"
                         }
                     ]
                 }
