@@ -5,6 +5,7 @@
 import 'https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v3.0.0/dist/cookieconsent.umd.js';
 const scriptSrc = document.currentScript.getAttribute('src') || 'latest';
 const currentTag = scriptSrc.split('@').slice(-1)[0].split('/')[0];
+console.debug('currentTag:', currentTag);
 
 function consentUpdate(cookie) {
     let consentLevel = cookie["categories"];
