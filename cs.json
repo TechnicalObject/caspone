@@ -32,15 +32,9 @@
                     "body": [
                         {
                             "name": "cc_cookie",
-                            "domain": "Google Analytics",
-                            "description": "Cookie nastavená <a href=\"#das\">Google Analytics</a>.",
-                            "expiration": "Vyprší po 12 dnech"
-                        },
-                        {
-                            "name": "_gid",
-                            "domain": "Google Analytics",
-                            "description": "Cookie nastavená <a href=\"#das\">Google Analytics</a>",
-                            "expiration": "Návštěva"
+                            "domain": ".komjati.design",
+                            "description": "Informace o udělených souhlasech",
+                            "expiration": "365 dní"
                         }
                     ]
                 }
@@ -61,7 +55,7 @@
                             "name": "_ga",
                             "domain": "Google Analytics",
                             "description": "Cookie nastavená <a href=\"#das\">Google Analytics</a>.",
-                            "expiration": "Vyprší po 12 dnech"
+                            "expiration": "2 roky"
                         },
                         {
                             "name": "_gid",
