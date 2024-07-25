@@ -11,6 +11,7 @@ const currentTag = /\d+\.\d+\.\d+/g.test(tagFromSrc) ? tagFromSrc : 'latest';
 console.debug('currentTag:', currentTag);
 
 function consentUpdate(cookie) {
+    window.dataLayer = window.dataLayer || [];
     let consentLevel = cookie["categories"];
     let adStorage = consentLevel.includes("marketing") ? "granted" : "denied";
     let analyticsStorage = consentLevel.includes("analytics") ? "granted" : "denied";
@@ -22,6 +23,7 @@ function consentUpdate(cookie) {
         ad_user_data: adUserData,
         ad_personalization: adPersonalization
     });
+    dataLayer.push({'event': 'consent_update'});
 }
 
 const ccObj = {
