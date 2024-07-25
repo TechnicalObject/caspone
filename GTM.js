@@ -20,7 +20,7 @@ gtag('consent', 'default', {
 const envPartTest = document.currentScript.getAttribute('env') || '';
 const gtmId = document.currentScript.getAttribute('gtmid') || '';
 const hostName = document.currentScript.getAttribute('hostname') || '';
-const gtmUrl = document.currentScript.getAttribute('hostname') || 'https://www.googletagmanager.com/gtm.js';
+const gtmUrl = document.currentScript.getAttribute('gtmurl') || 'https://www.googletagmanager.com/gtm.js';
 let envPart = '';
 const currentHostName = window.location.host;
 if (currentHostName != hostName) {
