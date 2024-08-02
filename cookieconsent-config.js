@@ -11,17 +11,19 @@ const currentTag = /\d+\.\d+\.\d+/g.test(tagFromSrc) ? tagFromSrc : 'latest';
 console.debug('currentTag:', currentTag);
 
 function consentUpdate(cookie) {
+    window.dataLayer = window.dataLayer || [];
     let consentLevel = cookie["categories"];
-    let adStorage = consentLevel.includes("ads") ? "granted" : "denied";
+    let adStorage = consentLevel.includes("marketing") ? "granted" : "denied";
     let analyticsStorage = consentLevel.includes("analytics") ? "granted" : "denied";
-    let adUserData = consentLevel.includes("ads") ? "granted" : "denied";
-    let adPersonalization = consentLevel.includes("ads") ? "granted" : "denied";
+    let adUserData = consentLevel.includes("marketing") ? "granted" : "denied";
+    let adPersonalization = consentLevel.includes("marketing") ? "granted" : "denied";
     gtag('consent', 'update', {
         ad_storage: adStorage,
         analytics_storage: analyticsStorage,
         ad_user_data: adUserData,
         ad_personalization: adPersonalization
     });
+    dataLayer.push({'event': 'consent_update'});
 }
 
 const ccObj = {

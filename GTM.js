@@ -20,6 +20,7 @@ gtag('consent', 'default', {
 const envPartTest = document.currentScript.getAttribute('env') || '';
 const gtmId = document.currentScript.getAttribute('gtmid') || '';
 const hostName = document.currentScript.getAttribute('hostname') || '';
+const gtmUrl = document.currentScript.getAttribute('gtmurl') || 'https://www.googletagmanager.com/gtm.js';
 let envPart = '';
 const currentHostName = window.location.host;
 if (currentHostName != hostName) {
@@ -28,5 +29,5 @@ if (currentHostName != hostName) {
 (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl+ envPart;f.parentNode.insertBefore(j,f);
+gtmUrl+'?id='+i+dl+ envPart;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer',gtmId);
