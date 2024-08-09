@@ -23,7 +23,7 @@ function consentUpdate(cookie) {
         ad_user_data: adUserData,
         ad_personalization: adPersonalization
     });
-    dataLayer.push({'event': 'consent_update'});
+    dataLayer.push({'event': 'consent_ready'});
 }
 
 const ccObj = {
