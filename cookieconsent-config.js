@@ -2,7 +2,7 @@
  * All config. options available here:
  * https://cookieconsent.orestbida.com/reference/configuration-reference.html
  */
-import 'https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v3.0.0/dist/cookieconsent.umd.js';
+import 'https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v3.0.1/dist/cookieconsent.umd.js';
 const scriptSrc = new URL(import.meta.url).href || 'latest';
 console.debug(new URL(import.meta.url).href);
 const tagFromSrc = scriptSrc.split('@').slice(-1)[0].split('/')[0];
@@ -13,17 +13,110 @@ console.debug('currentTag:', currentTag);
 function consentUpdate(cookie) {
     window.dataLayer = window.dataLayer || [];
     let consentLevel = cookie["categories"];
-    let adStorage = consentLevel.includes("marketing") ? "granted" : "denied";
-    let analyticsStorage = consentLevel.includes("analytics") ? "granted" : "denied";
-    let adUserData = consentLevel.includes("marketing") ? "granted" : "denied";
-    let adPersonalization = consentLevel.includes("marketing") ? "granted" : "denied";
     gtag('consent', 'update', {
-        ad_storage: adStorage,
-        analytics_storage: analyticsStorage,
-        ad_user_data: adUserData,
-        ad_personalization: adPersonalization
+        ad_storage: consentLevel.includes("marketing") ? "granted" : "denied",
+        analytics_storage: consentLevel.includes("analytics") ? "granted" : "denied",
+        ad_user_data: consentLevel.includes("marketing") ? "granted" : "denied",
+        ad_personalization: consentLevel.includes("marketing") ? "granted" : "denied"
     });
     dataLayer.push({'event': 'consent_ready'});
+}
+
+
+const crossSvg = `
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+          <rect width="256" height="256" fill="none"/>
+          <line x1="80" y1="80" x2="176" y2="176" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"/>
+          <line x1="80" y1="176" x2="176" y2="80" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"/>
+        </svg>
+    `;
+
+const cookieSvg = `
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+          <rect width="256" height="256" fill="none"/>
+          <circle cx="156" cy="172" r="12"/>
+          <circle cx="92" cy="164" r="12"/>
+          <circle cx="84" cy="108" r="12"/>
+          <circle cx="132" cy="124" r="12"/>
+          <path d="M224,128a48,48,0,0,1-48-48,48,48,0,0,1-48-48,96,96,0,1,0,96,96Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+        </svg>
+      `;
+let cookieButton;
+
+function insertButton() {
+    const style = document.createElement("style");
+    style.innerHTML = `
+        /* Floating Button Styles */
+        .floating-button {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 55px;
+            height: 55px;
+            background-color: #11875c;
+            color: white;
+            border-radius: 50%;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 9999; /* Ensure the button is on top */
+            transition: transform 0.6s, background-color 0.3s;
+            transform: perspective(600px) rotateY(0);
+        }
+
+        .floating-button.is-flipped {
+        background-color: gray;
+            transform: perspective(600px) rotateY(180deg);
+        }
+
+        .floating-button-hidden {
+            display: none;
+        }
+
+        /* Cookie Icon Styles */
+        .floating-button svg {
+            width: 40px;
+            height: 40px;
+            fill: white;
+            transition: transform 0.6s;
+        }
+
+        .is-flipped #cookieIcon {
+            transform: rotate(180deg);
+        }
+    `;
+    document.head.appendChild(style);
+    cookieButton = document.createElement("div");
+    cookieButton.classList.add("floating-button");
+    cookieButton.id = "cookieButton";
+
+    // Set the inner HTML of the button to include the SVG
+    cookieButton.innerHTML = cookieSvg;
+    cookieButton.classList.add('floating-button-hidden');
+
+    // Append the floating button to the body (or you can target another container)
+    document.body.appendChild(cookieButton);
+    cookieButton.addEventListener("click", function() {
+        if (!cookieButton.classList.contains('is-flipped')) {
+            CookieConsent.showPreferences();
+        } else {
+            CookieConsent.hidePreferences()
+        }
+    });
+}
+
+insertButton();
+
+function showCookie() {
+    cookieButton.classList.remove('is-flipped');
+    cookieButton.innerHTML = cookieSvg;
+}
+
+function showCross() {
+    cookieButton.classList.add('is-flipped');
+    cookieButton.innerHTML = crossSvg;
 }
 
 const ccObj = {
@@ -59,29 +152,38 @@ const ccObj = {
         },
 
         onFirstConsent: ({cookie}) => {
-            console.log('onFirstConsent fired',cookie);
+            console.debug('onFirstConsent fired',cookie);
         },
 
         onConsent: ({cookie}) => {
-            console.log('onConsent fired!', cookie['categories']);
+            console.debug('onConsent fired!', cookie['categories']);
+            cookieButton.classList.remove('floating-button-hidden');
             consentUpdate(cookie);
         },
 
         onChange: ({cookie, changedCategories, changedServices}) => {
-            console.log('onChange fired!', changedCategories, changedServices);
+            console.debug('onChange fired!', changedCategories, changedServices);
             consentUpdate(cookie);
         },
 
         onModalReady: ({modalName}) => {
-            console.log('ready:', modalName);
+            console.debug('ready:', modalName);
         },
 
         onModalShow: ({modalName}) => {
-            console.log('visible:', modalName);
+            console.debug('visible:', modalName);
+            if (modalName === 'consentModal') {
+                cookieButton.classList.add('floating-button-hidden');
+            }
+            showCross();
         },
 
         onModalHide: ({modalName}) => {
-            console.log('hidden:', modalName);
+            console.debug('hidden:', modalName);
+            if (modalName === 'consentModal') {
+                cookieButton.classList.remove('floating-button-hidden');
+            }
+            showCookie();
         },
 
         categories: {
