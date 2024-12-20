@@ -17,15 +17,12 @@ gtag('consent', 'default', {
 });
 
 // load GTM
-const envPartTest = document.currentScript.getAttribute('env') || '';
 const gtmId = document.currentScript.getAttribute('gtmid') || '';
-const hostName = document.currentScript.getAttribute('hostname') || '';
 const gtmUrl = document.currentScript.getAttribute('gtmurl') || 'https://www.googletagmanager.com/gtm.js';
-let envPart = '';
 const currentHostName = window.location.host;
-if (currentHostName != hostName) {
-    envPart = envPartTest;
-}
+const isStaging = currentHostName.includes('.local') || currentHostName.includes('-stg');
+console.log('isStaging', isStaging);
+const envPart = isStaging ? document.currentScript?.getAttribute('env') || '' : '';
 (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
