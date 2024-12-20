@@ -107,17 +107,14 @@ function insertButton() {
         // Add the event listener
         console.debug('document still loading, appending cookie button');
         document.addEventListener("DOMContentLoaded", DOMListener);
-        cookieButton.addEventListener("click", function () {
-            if (!cookieButton.classList.contains('is-flipped')) {
-                CookieConsent.showPreferences();
-            } else {
-                CookieConsent.hidePreferences()
-            }
-        });
     } else {
         console.debug('document already loaded, appending cookie button');
         document.body.appendChild(cookieButton);
     }
+    cookieButton.addEventListener("click", () => {
+        const isFlipped = cookieButton.classList.contains('is-flipped');
+        isFlipped ? CookieConsent.hidePreferences() : CookieConsent.showPreferences();
+    });
 }
 
 insertButton();
