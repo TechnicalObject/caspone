@@ -12,6 +12,7 @@ console.debug('currentTag:', currentTag);
 
 function consentUpdate(cookie) {
     window.dataLayer = window.dataLayer || [];
+    function gtag() { window.dataLayer.push(arguments); }
     let consentLevel = cookie["categories"];
     gtag('consent', 'update', {
         ad_storage: consentLevel.includes("marketing") ? "granted" : "denied",
