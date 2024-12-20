@@ -100,12 +100,12 @@ function insertButton() {
     // Append the floating button to the body (or you can target another container)
 
     function DOMListener() {
-        console.debug('appending cookie button');
         document.body.appendChild(cookieButton);
         document.removeEventListener("DOMContentLoaded", DOMListener);
     }
     if (document.readyState === "loading") {
         // Add the event listener
+        console.debug('document still loading, appending cookie button');
         document.addEventListener("DOMContentLoaded", DOMListener);
         cookieButton.addEventListener("click", function () {
             if (!cookieButton.classList.contains('is-flipped')) {
@@ -115,6 +115,7 @@ function insertButton() {
             }
         });
     } else {
+        console.debug('document already loaded, appending cookie button');
         document.body.appendChild(cookieButton);
     }
 }
