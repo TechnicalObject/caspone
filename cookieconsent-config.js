@@ -100,6 +100,7 @@ function insertButton() {
     // Append the floating button to the body (or you can target another container)
 
     function DOMListener() {
+        console.debug('appending cookie button');
         document.body.appendChild(cookieButton);
         document.removeEventListener("DOMContentLoaded", DOMListener);
     }
