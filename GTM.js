@@ -21,7 +21,7 @@ const gtmId = document.currentScript.getAttribute('gtmid') || '';
 const gtmUrl = document.currentScript.getAttribute('gtmurl') || 'https://www.googletagmanager.com/gtm.js';
 const currentHostName = window.location.host;
 const isStaging = currentHostName.includes('.local') || currentHostName.includes('-stg');
-console.log('isStaging', isStaging);
+console.debug('isStaging', isStaging);
 const envPart = isStaging ? document.currentScript?.getAttribute('env') || '' : '';
 (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
