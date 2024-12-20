@@ -102,17 +102,21 @@ function insertButton() {
     function DOMListener() {
         console.debug('appending cookie button');
         document.body.appendChild(cookieButton);
-        //document.removeEventListener("DOMContentLoaded", DOMListener);
+        document.removeEventListener("DOMContentLoaded", DOMListener);
     }
-    // Add the event listener
-    document.addEventListener("DOMContentLoaded", DOMListener);
-    cookieButton.addEventListener("click", function() {
-        if (!cookieButton.classList.contains('is-flipped')) {
-            CookieConsent.showPreferences();
-        } else {
-            CookieConsent.hidePreferences()
-        }
-    });
+    if (document.readyState === "loading") {
+        // Add the event listener
+        document.addEventListener("DOMContentLoaded", DOMListener);
+        cookieButton.addEventListener("click", function () {
+            if (!cookieButton.classList.contains('is-flipped')) {
+                CookieConsent.showPreferences();
+            } else {
+                CookieConsent.hidePreferences()
+            }
+        });
+    } else {
+        document.body.appendChild(cookieButton);
+    }
 }
 
 insertButton();
