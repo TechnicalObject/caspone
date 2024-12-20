@@ -102,7 +102,7 @@ function insertButton() {
     function DOMListener() {
         console.debug('appending cookie button');
         document.body.appendChild(cookieButton);
-        document.removeEventListener("DOMContentLoaded", DOMListener);
+        //document.removeEventListener("DOMContentLoaded", DOMListener);
     }
     // Add the event listener
     document.addEventListener("DOMContentLoaded", DOMListener);
