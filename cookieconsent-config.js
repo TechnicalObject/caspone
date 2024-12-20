@@ -97,7 +97,13 @@ function insertButton() {
     cookieButton.classList.add('floating-button-hidden');
 
     // Append the floating button to the body (or you can target another container)
-    document.body.appendChild(cookieButton);
+
+    function DOMListener() {
+        document.body.appendChild(cookieButton);
+        document.removeEventListener("DOMContentLoaded", DOMListener);
+    }
+    // Add the event listener
+    document.addEventListener("DOMContentLoaded", DOMListener);
     cookieButton.addEventListener("click", function() {
         if (!cookieButton.classList.contains('is-flipped')) {
             CookieConsent.showPreferences();
