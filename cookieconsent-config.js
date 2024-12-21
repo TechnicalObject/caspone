@@ -45,55 +45,6 @@ const cookieSvg = `
 let cookieButton;
 
 function insertButton() {
-    const style = document.createElement("style");
-    style.innerHTML = `
-        /* Floating Button Styles */
-        :root {
-            --floating-button-bg: #11875c;
-            --floating-button-color: white;
-            --floating-button-flipped-bg: gray;
-        }
-        .floating-button {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            width: 55px;
-            height: 55px;
-            background-color: var(--floating-button-bg);
-            color: white;
-            border-radius: 50%;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            z-index: 9999; /* Ensure the button is on top */
-            transition: transform 0.6s, background-color 0.3s;
-            transform: perspective(600px) rotateY(0);
-        }
-
-        .floating-button.is-flipped {
-            background-color: var(--floating-button-flipped-bg);
-            transform: perspective(600px) rotateY(180deg);
-        }
-
-        .floating-button-hidden {
-            display: none;
-        }
-
-        /* Cookie Icon Styles */
-        .floating-button svg {
-            width: 40px;
-            height: 40px;
-            fill: white;
-            transition: transform 0.6s;
-        }
-
-        .is-flipped #cookieIcon {
-            transform: rotate(180deg);
-        }
-    `;
-    document.head.appendChild(style);
     cookieButton = document.createElement("div");
     cookieButton.classList.add("floating-button");
     cookieButton.id = "cookieButton";
