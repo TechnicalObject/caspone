@@ -48,13 +48,18 @@ function insertButton() {
     const style = document.createElement("style");
     style.innerHTML = `
         /* Floating Button Styles */
+        :root {
+            --floating-button-bg: #11875c;
+            --floating-button-color: white;
+            --floating-button-flipped-bg: gray;
+        }
         .floating-button {
             position: fixed;
             bottom: 20px;
             left: 20px;
             width: 55px;
             height: 55px;
-            background-color: #11875c;
+            background-color: var(--floating-button-bg);
             color: white;
             border-radius: 50%;
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
@@ -68,7 +73,7 @@ function insertButton() {
         }
 
         .floating-button.is-flipped {
-        background-color: gray;
+            background-color: var(--floating-button-flipped-bg);
             transform: perspective(600px) rotateY(180deg);
         }
 
