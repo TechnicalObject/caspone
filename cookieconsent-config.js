@@ -2,6 +2,10 @@
  * All config. options available here:
  * https://cookieconsent.orestbida.com/reference/configuration-reference.html
  */
+const linkElement = document.createElement("link");
+linkElement.rel = "stylesheet";
+linkElement.href = `https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v3.0.1/dist/cookieconsent.css`;
+document.head.appendChild(linkElement);
 import 'https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v3.0.1/dist/cookieconsent.umd.js';
 const scriptSrc = new URL(import.meta.url).href || 'latest';
 console.debug(new URL(import.meta.url).href);
