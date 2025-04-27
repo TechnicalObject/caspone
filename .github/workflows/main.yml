@@ -1,0 +1,48 @@
+name: Auto Versioned Release (Monthly Reset)
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Fetch tags
+        run: git fetch --tags
+
+      - name: Set version (Year.Month.x with reset)
+        id: set_version
+        run: |
+          YEAR=$(date +'%Y')
+          MONTH=$(date +'%m' | sed 's/^0*//') # Remove leading zero
+          
+          # Get latest tag for this year.month
+          LATEST_TAG=$(git tag --list "$YEAR.$MONTH.*" --sort=-v:refname | head -n 1)
+
+          if [ -z "$LATEST_TAG" ]; then
+            # No previous tags for this month
+            BUILD_NUMBER=1
+          else
+            # Extract last 'x' and increment
+            LAST_X=$(echo "$LATEST_TAG" | awk -F. '{print $3}')
+            BUILD_NUMBER=$((LAST_X + 1))
+          fi
+
+          VERSION="$YEAR.$MONTH.$BUILD_NUMBER"
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ env.VERSION }}
+          name: Release ${{ env.VERSION }}
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -2,6 +2,25 @@
  * All config. options available here:
  * https://cookieconsent.orestbida.com/reference/configuration-reference.html
  */
+
+const CAT_NECESSARY = "necessary";
+const CAT_ANALYTICS = "analytics";
+const CAT_ADVERTISEMENT = "advertisement";
+const CAT_FUNCTIONALITY = "functionality";
+const CAT_SECURITY = "security";
+
+const SERVICE_AD_STORAGE = 'ad_storage'
+const SERVICE_AD_USER_DATA = 'ad_user_data'
+const SERVICE_AD_PERSONALIZATION = 'ad_personalization'
+const SERVICE_ANALYTICS_STORAGE = 'analytics_storage'
+const SERVICE_FUNCTIONALITY_STORAGE = 'functionality_storage'
+const SERVICE_PERSONALIZATION_STORAGE = 'personalization_storage'
+const SERVICE_SECURITY_STORAGE = 'security_storage'
+
+// Define dataLayer and the gtag function.
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+
 const linkElement = document.createElement("link");
 linkElement.rel = "stylesheet";
 linkElement.href = `https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@v3.0.1/dist/cookieconsent.css`;
@@ -14,15 +33,29 @@ const tagFromSrc = scriptSrc.split('@').slice(-1)[0].split('/')[0];
 const currentTag = /\d+\.\d+\.\d+/g.test(tagFromSrc) ? tagFromSrc : 'latest';
 console.debug('currentTag:', currentTag);
 
-function consentUpdate(cookie) {
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { window.dataLayer.push(arguments); }
-    let consentLevel = cookie["categories"];
+// Set default consent to 'denied' (this should happen before changing any other dataLayer)
+gtag('consent', 'default', {
+    [SERVICE_AD_STORAGE]: 'denied',
+    [SERVICE_AD_USER_DATA]: 'denied',
+    [SERVICE_AD_PERSONALIZATION]: 'denied',
+    [SERVICE_ANALYTICS_STORAGE]: 'denied',
+    [SERVICE_FUNCTIONALITY_STORAGE]: 'denied',
+    [SERVICE_PERSONALIZATION_STORAGE]: 'denied',
+    [SERVICE_SECURITY_STORAGE]: 'denied',
+});
+
+/** 
+ * Update gtag consent according to the users choices made in CookieConsent UI
+ */
+function updateGtagConsent() {
     gtag('consent', 'update', {
-        ad_storage: consentLevel.includes("marketing") ? "granted" : "denied",
-        analytics_storage: consentLevel.includes("analytics") ? "granted" : "denied",
-        ad_user_data: consentLevel.includes("marketing") ? "granted" : "denied",
-        ad_personalization: consentLevel.includes("marketing") ? "granted" : "denied"
+        [SERVICE_ANALYTICS_STORAGE]: CookieConsent.acceptedService(SERVICE_ANALYTICS_STORAGE, CAT_ANALYTICS) ? 'granted' : 'denied',
+        [SERVICE_AD_STORAGE]: CookieConsent.acceptedService(SERVICE_AD_STORAGE, CAT_ADVERTISEMENT) ? 'granted' : 'denied',
+        [SERVICE_AD_USER_DATA]: CookieConsent.acceptedService(SERVICE_AD_USER_DATA, CAT_ADVERTISEMENT) ? 'granted' : 'denied',
+        [SERVICE_AD_PERSONALIZATION]: CookieConsent.acceptedService(SERVICE_AD_PERSONALIZATION, CAT_ADVERTISEMENT) ? 'granted' : 'denied',
+        [SERVICE_FUNCTIONALITY_STORAGE]: CookieConsent.acceptedService(SERVICE_FUNCTIONALITY_STORAGE, CAT_FUNCTIONALITY) ? 'granted' : 'denied',
+        [SERVICE_PERSONALIZATION_STORAGE]: CookieConsent.acceptedService(SERVICE_PERSONALIZATION_STORAGE, CAT_FUNCTIONALITY) ? 'granted' : 'denied',
+        [SERVICE_SECURITY_STORAGE]: CookieConsent.acceptedService(SERVICE_SECURITY_STORAGE, CAT_SECURITY) ? 'granted' : 'denied',
     });
     dataLayer.push({'event': 'consent_ready'});
 }
@@ -123,17 +156,18 @@ const ccObj = {
 
         onFirstConsent: ({cookie}) => {
             console.debug('onFirstConsent fired',cookie);
+            updateGtagConsent();
         },
 
         onConsent: ({cookie}) => {
             console.debug('onConsent fired!', cookie['categories']);
             cookieButton.classList.remove('floating-button-hidden');
-            consentUpdate(cookie);
+            updateGtagConsent();
         },
 
         onChange: ({cookie, changedCategories, changedServices}) => {
             console.debug('onChange fired!', changedCategories, changedServices);
-            consentUpdate(cookie);
+            updateGtagConsent();
         },
 
         onModalReady: ({modalName}) => {
@@ -156,70 +190,67 @@ const ccObj = {
             showCookie();
         },
 
-        categories: {
-            necessary: {
-                enabled: true,  // this category is enabled by default
-                readOnly: true  // this category cannot be disabled
+    // Configure categories and services
+    categories: {
+        [CAT_NECESSARY]: {
+            enabled: true,  // this category is enabled by default
+            readOnly: true,  // this category cannot be disabled
+        },
+        [CAT_ANALYTICS]: {
+            autoClear: {
+                cookies: [
+                    {
+                        name: /^_ga/,   // regex: match all cookies starting with '_ga'
+                    },
+                    {
+                        name: '_gid',   // string: exact cookie name
+                    }
+                ]
             },
-            analytics: {
-                autoClear: {
-                    cookies: [
-                        {
-                            name: /^_ga/,   // regex: match all cookies starting with '_ga'
-                        },
-                        {
-                            name: '_gid',   // string: exact cookie name
-                        }
-                    ]
-                },
-
-                // https://cookieconsent.orestbida.com/reference/configuration-reference.html#category-services
-                services: {
-                    ga: {
-                        label: 'Google Analytics',
-                        onAccept: () => {},
-                        onReject: () => {}
-                    },
-                    youtube: {
-                        label: 'Youtube Embed',
-                        onAccept: () => {},
-                        onReject: () => {}
-                    },
-                }
-            },
-            marketing: {
-                autoClear: {
-                    cookies: [
-                        {
-                            name: /^_ga/,   // regex: match all cookies starting with '_ga'
-                        },
-                        {
-                            name: '_gid',   // string: exact cookie name
-                        }
-                    ]
-                },
-
-                // https://cookieconsent.orestbida.com/reference/configuration-reference.html#category-services
-                services: {
-                    ga: {
-                        label: 'Google Analytics',
-                        onAccept: () => {},
-                        onReject: () => {}
-                    },
-                    youtube: {
-                        label: 'Youtube Embed',
-                        onAccept: () => {},
-                        onReject: () => {}
-                    },
+            // See: https://cookieconsent.orestbida.com/reference/configuration-reference.html#category-services
+            services: {
+                [SERVICE_ANALYTICS_STORAGE]: {
+                    label: 'Enables storage (such as cookies) related to analytics e.g. visit duration.',
                 }
             }
         },
+        [CAT_ADVERTISEMENT]: {
+            services: {
+                [SERVICE_AD_STORAGE]: {
+                    label: 'Enables storage (such as cookies) related to advertising.',
+                },
+                [SERVICE_AD_USER_DATA]: {
+                    label: 'Sets consent for sending user data related to advertising to Google.',
+                },
+                [SERVICE_AD_PERSONALIZATION]: {
+                    label: 'Sets consent for personalized advertising.',
+                },
+            }
+        },
+        [CAT_FUNCTIONALITY]: {
+            services: {
+                [SERVICE_FUNCTIONALITY_STORAGE]: {
+                    label: 'Enables storage that supports the functionality of the website or app e.g. language settings.',
+                },
+                [SERVICE_PERSONALIZATION_STORAGE]: {
+                    label: 'Enables storage related to personalization e.g. video recommendations.',
+                },
+            }
+        },
+        [CAT_SECURITY]: {
+            services: {
+                [SERVICE_SECURITY_STORAGE]: {
+                    label: 'Enables storage related to security such as authentication functionality, fraud prevention, and other user protection.',
+                },
+            }
+        }
+    },
 
         language: {
             default: 'cs',
             translations: {
                 en: `https://cdn.jsdelivr.net/gh/TechnicalObject/caspone@${currentTag}/en.json`,
-                cs: `https://cdn.jsdelivr.net/gh/TechnicalObject/caspone@${currentTag}/cs.json`
+                cs: `cs.json`
             }
         }
     };
