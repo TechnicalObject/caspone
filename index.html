@@ -2,10 +2,89 @@
 <html>
 <head>
     <title>My HTML Page</title>
-    <script src="cookiesonsent-config.js"></script>
-    
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@3.0.1/dist/cookieconsent.css"> -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 2000px; /* Ensure enough height to scroll */
+            background: linear-gradient(to bottom, #ffffff, #add8e6); /* Optional for a visual effect */
+        }
+
+        h1 {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .content {
+            padding: 20px;
+        }
+
+        .scroll-to-top-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: none; /* Hidden initially */
+            width: 50px;
+            height: 50px;
+            background-color: #fff;
+            border-color: #000;
+            border: 1px;
+            border-radius: 50%; /* Makes the button circular */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: opacity 0.3s, background-color 0.3s;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+        }
+
+        .scroll-to-top-btn svg {
+            fill: #000; /* Arrow color */
+        }
+
+        .scroll-to-top-btn:hover {
+            background-color: #fff;
+            transform: scale(1.1);
+        }
+    </style>
 </head>
 <body>
     <h1>Hello, world!</h1>
+    <!-- <script>
+        window.gtmId = 'GTM-MKN8R8P6';
+    </script> -->
+    <script type="module" src="./cookieconsent-config.js" onerror="console.error('Failed to load cookie consent configuration')"></script>
+    <div class="content">
+        <h1>Scroll down to see the button appear!</h1>
+        <p>Content goes here...</p>
+        <!-- Add more content to enable scrolling -->
+        <p style="height: 1500px;">More content...</p>
+    </div>
+    <!-- The Return to Top button -->
+    <button id="scrollToTopBtn" class="scroll-to-top-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
+            <path d="M6 15l6-6 6 6" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </button>
+    <script>
+        // Get the button element
+        let scrollToTopBtn = document.getElementById("scrollToTopBtn");
+
+        // Show the button when the user scrolls down 20% of the page
+        window.onscroll = function() {
+            if (document.body.scrollTop > document.body.scrollHeight * 0.1 || document.documentElement.scrollTop > document.documentElement.scrollHeight * 0.1) {
+                scrollToTopBtn.style.display = "flex"; // Show the button
+            } else {
+                scrollToTopBtn.style.display = "none"; // Hide the button
+            }
+        };
+
+        // Scroll to the top of the page when the button is clicked
+        scrollToTopBtn.onclick = function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+    </script>
 </body>
 </html>

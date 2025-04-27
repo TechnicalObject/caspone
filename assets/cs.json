@@ -1,6 +1,6 @@
 {
     "consentModal": {
-        "title": "Používáme cookies",
+        "title": "Používaaaáme cookies",
         "description": "Tato stránka používá cookies, které nám pomáhají ke zkvalitňování obsahu. <button type=\"button\" data-cc=\"c-settings\" class=\"cc-link\">Přizpůsobit</button>",
         "acceptAllBtn": "Přijmout vše",
         "acceptNecessaryBtn": "Odmítnout vše",
@@ -32,7 +32,7 @@
                     "body": [
                         {
                             "name": "cc_cookie",
-                            "domain": ".komjati.design",
+                            "domain": ".localhost",
                             "description": "Informace o udělených souhlasech",
                             "expiration": "365 dní"
                         }
@@ -69,7 +69,7 @@
             {
                 "title": "Marketingové cookies",
                 "description": "Tyto cookies sbírají informace o tom, jak používáte náš web, které příspěvky jste navštívili a na jaké odkazy jste klikli. Všechna data jsou anonymizována a nemohou být využita k identifikaci jednotlivých uživatelů.",
-                "linkedCategory": "marketing",
+                "linkedCategory": "advertisement",
                 "cookieTable": {
                     "headers": {
                         "name": "Název",
@@ -92,6 +92,16 @@
                         }
                     ]
                 }
+            },
+            {
+                "title": "Functionality",
+                "description": "Cookies used for functionality allow users to interact with a service or site to access features that are fundamental to that service. Things considered fundamental to the service include preferences like the user's choice of language, product optimizations that help maintain and improve a service, and maintaining information relating to a user's session, such as the content of a shopping cart.",
+                "linkedCategory": "functionality"
+            },
+            {
+                "title": "Security",
+                "description": "Cookies used for security authenticate users, prevent fraud, and protect users as they interact with a service.",
+                "linkedCategory": "security"
             },
             {
                 "title": "Více informací",

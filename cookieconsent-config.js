@@ -33,7 +33,7 @@ const tagFromSrc = scriptSrc.split('@').slice(-1)[0].split('/')[0];
 const currentTag = /\d+\.\d+\.\d+/g.test(tagFromSrc) ? tagFromSrc : 'latest';
 console.debug('currentTag:', currentTag);
 
-// Set default consent to 'denied' (this should happen before changing any other dataLayer)
+// Set the default consent state for all services
 gtag('consent', 'default', {
     [SERVICE_AD_STORAGE]: 'denied',
     [SERVICE_AD_USER_DATA]: 'denied',
@@ -42,7 +42,36 @@ gtag('consent', 'default', {
     [SERVICE_FUNCTIONALITY_STORAGE]: 'denied',
     [SERVICE_PERSONALIZATION_STORAGE]: 'denied',
     [SERVICE_SECURITY_STORAGE]: 'denied',
+    wait_for_update: 500,
+    region: ['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IS','IE','IT','LV','LI','LT','LU','MT','NL','NO','PL','PT','RO','SK','SI','ES','SE']
 });
+gtag('consent', 'default', {
+    [SERVICE_AD_STORAGE]: 'denied',
+    [SERVICE_AD_USER_DATA]: 'denied',
+    [SERVICE_AD_PERSONALIZATION]: 'denied',
+    [SERVICE_ANALYTICS_STORAGE]: 'denied',
+    [SERVICE_FUNCTIONALITY_STORAGE]: 'denied',
+    [SERVICE_PERSONALIZATION_STORAGE]: 'denied',
+    [SERVICE_SECURITY_STORAGE]: 'denied',
+    wait_for_update: 500
+});
+
+// load GTM if gtmId is set
+// const gtmId = document.currentScript?.getAttribute('data-gtmid') || '';
+const gtmId = window.gtmId || '';
+const gtmUrl = window.gtmURL || 'https://www.googletagmanager.com/gtm.js';
+const currentHostName = window.location.host;
+const regex = /(test|stg|stage|staging)\./g; // TODO: Make this the default value like: inputRegex || /(test|stg|stage|staging)\./g
+const isStaging = currentHostName.match(regex);
+console.debug('isStaging', isStaging);
+if (gtmId) {
+    const envPart = isStaging ? window.gtmEnv || '' : '';
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    gtmUrl+'?id='+i+dl+ envPart;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer',gtmId);
+}
 
 /** 
  * Update gtag consent according to the users choices made in CookieConsent UI

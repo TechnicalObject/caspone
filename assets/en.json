@@ -53,7 +53,7 @@
             {
                 "title": "Advertisement and Targeting cookies",
                 "description": "These cookies collect information about how you use the website, which pages you visited and which links you clicked on. All of the data is anonymized and cannot be used to identify you",
-                "linkedCategory": "marketing",
+                "linkedCategory": "advertisement",
                 "cookieTable": {
                     "headers": {
                         "name": "Name",
@@ -76,6 +76,16 @@
                         }
                     ]
                 }
+            },
+            {
+                "title": "Functionality",
+                "description": "Cookies used for functionality allow users to interact with a service or site to access features that are fundamental to that service. Things considered fundamental to the service include preferences like the user's choice of language, product optimizations that help maintain and improve a service, and maintaining information relating to a user's session, such as the content of a shopping cart.",
+                "linkedCategory": "functionality"
+            },
+            {
+                "title": "Security",
+                "description": "Cookies used for security authenticate users, prevent fraud, and protect users as they interact with a service.",
+                "linkedCategory": "security"
             },
             {
                 "title": "More information",
