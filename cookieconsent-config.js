@@ -250,7 +250,7 @@ const ccObj = {
             default: 'cs',
             translations: {
                 en: `https://cdn.jsdelivr.net/gh/TechnicalObject/caspone@${currentTag}/en.json`,
-                cs: `cs.json`
+                cs: '/assets/cs.json'
             }
         }
     };
