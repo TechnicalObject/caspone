@@ -17,6 +17,43 @@ const SERVICE_FUNCTIONALITY_STORAGE = 'functionality_storage'
 const SERVICE_PERSONALIZATION_STORAGE = 'personalization_storage'
 const SERVICE_SECURITY_STORAGE = 'security_storage'
 
+const WEBSITE_LOCALE = document.documentElement.lang.split('-')[0] || 'en'
+const DEFAULT_LOCALE = window.defaultLocale || 'cs';
+const LOCALE_PATHS = window.localePaths || {
+    'en': '/assets/en.json',
+    'cs': '/assets/cs.json'
+};
+
+let serviceTranslation = {
+    [SERVICE_ANALYTICS_STORAGE]: {
+        en: 'Enables storage (such as cookies) related to analytics e.g. visit duration.',
+        cs: 'Umožňuje ukládání (např. cookies) související s analýzou, např. doba návštěvy.'
+    },
+    [SERVICE_AD_STORAGE]: {
+        en: 'Enables storage (such as cookies) related to advertising.',
+        cs: 'Umožňuje ukládání (např. cookies) související s reklamou.'
+    },
+    [SERVICE_AD_USER_DATA]: {
+        en: 'Sets consent for sending user data related to advertising to Google.',
+        cs: 'Nastavuje souhlas se zasíláním údajů o uživatelských datech souvisejících s reklamou společnosti Google.'
+    },
+    [SERVICE_AD_PERSONALIZATION]: {
+        en: 'Sets consent for personalized advertising.',
+        cs: 'Nastavuje souhlas pro personalizovanou reklamu.'
+    },
+};
+console.log('serviceTranslation', serviceTranslation);
+
+function consentRun(selectedLang, ccObj) {
+    console.debug('consentRun');
+    ccObj.language.default = [selectedLang];
+    ccObj.categories[CAT_ANALYTICS].services[SERVICE_ANALYTICS_STORAGE].label = serviceTranslation[SERVICE_ANALYTICS_STORAGE][selectedLang];
+    ccObj.categories[CAT_ADVERTISEMENT].services[SERVICE_AD_STORAGE].label = serviceTranslation[SERVICE_AD_STORAGE][selectedLang];
+    ccObj.categories[CAT_ADVERTISEMENT].services[SERVICE_AD_USER_DATA].label = serviceTranslation[SERVICE_AD_USER_DATA][selectedLang];
+    ccObj.categories[CAT_ADVERTISEMENT].services[SERVICE_AD_PERSONALIZATION].label = serviceTranslation[SERVICE_AD_PERSONALIZATION][selectedLang];
+    CookieConsent.run(ccObj);
+}
+
 // Define dataLayer and the gtag function.
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
@@ -185,7 +222,6 @@ const ccObj = {
 
         onFirstConsent: ({cookie}) => {
             console.debug('onFirstConsent fired',cookie);
-            updateGtagConsent();
         },
 
         onConsent: ({cookie}) => {
@@ -276,11 +312,9 @@ const ccObj = {
     },
 
         language: {
-            default: 'cs',
-            translations: {
-                en: `https://cdn.jsdelivr.net/gh/TechnicalObject/caspone@${currentTag}/en.json`,
-                cs: '/assets/cs.json'
-            }
+            autoDetect: 'document',
+            default: [DEFAULT_LOCALE],
+            translations: LOCALE_PATHS
         }
     };
 try {
@@ -294,13 +328,15 @@ try {
     let cntryCode;
     await getCloudflareJSON('https://1.1.1.1/cdn-cgi/trace').then(data => (cntryCode = data));
     let EEAregions = ['AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'GR', 'HU', 'IS', 'IE', 'IT', 'LV', 'LI', 'LT', 'LU', 'MT', 'NL', 'NO', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SE'];
-// let noticeRegions = ['US','JP','CN','KR'];
-// let bannerType;
-// let dynamicMode = 'opt-in';
+    // let noticeRegions = ['US','JP','CN','KR'];
+    // let bannerType;
+    // let dynamicMode = 'opt-in';
     if (EEAregions.includes(cntryCode)) {
-        CookieConsent.run(ccObj);
+        consentRun(WEBSITE_LOCALE, ccObj);
     }
 } catch (e) {
     console.error(e);
-    CookieConsent.run(ccObj)
+    consentRun(WEBSITE_LOCALE, ccObj);
 }
+
+
