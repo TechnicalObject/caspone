@@ -96,7 +96,10 @@ gtag('consent', 'default', {
 // load GTM if gtmId is set
 // const gtmId = document.currentScript?.getAttribute('data-gtmid') || '';
 const gtmId = window.gtmId || '';
-const gtmUrl = window.gtmURL || 'https://www.googletagmanager.com/gtm.js';
+let gtmUrl = window.gtmURL || 'https://www.googletagmanager.com/gtm.js';
+if (!gtmUrl.endsWith('/')) {
+  gtmUrl += '/';
+}
 const currentHostName = window.location.host;
 const regex = /(test|stg|stage|staging)\./g; // TODO: Make this the default value like: inputRegex || /(test|stg|stage|staging)\./g
 const isStaging = currentHostName.match(regex);
