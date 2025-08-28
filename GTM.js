@@ -20,11 +20,15 @@ gtag('consent', 'default', {
 const gtmId = document.currentScript.getAttribute('data-gtmid') || '';
 const gtmUrl = document.currentScript.getAttribute('data-gtmurl') || 'https://www.googletagmanager.com/gtm.js';
 const currentHostName = window.location.host;
-const isStaging = currentHostName.includes('local') || currentHostName.includes('-stg');
+const regex = /(test|stg|stage|staging)\./g; // TODO: Make this the default value like: inputRegex || /(test|stg|stage|staging)\./g
+const isStaging = currentHostName.match(regex);
 console.debug('isStaging', isStaging);
-const envPart = isStaging ? document.currentScript?.getAttribute('data-env') || '' : '';
-(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-gtmUrl+'?id='+i+dl+ envPart;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer',gtmId);
+if (gtmId) {
+    const envPart = isStaging ? document.currentScript?.getAttribute('data-env') || '' : '';
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    gtmUrl+'?id='+i+dl+ envPart;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer',gtmId);
+}
+

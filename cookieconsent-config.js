@@ -45,6 +45,7 @@ let serviceTranslation = {
 console.log('serviceTranslation', serviceTranslation);
 
 function consentRun(selectedLang, ccObj) {
+    // inspiration taken from https://codesandbox.io/p/sandbox/cookieconsent-service-label-translation-hygkxc
     console.debug('consentRun');
     ccObj.language.default = [selectedLang];
     ccObj.categories[CAT_ANALYTICS].services[SERVICE_ANALYTICS_STORAGE].label = serviceTranslation[SERVICE_ANALYTICS_STORAGE][selectedLang];
@@ -80,8 +81,15 @@ gtag('consent', 'default', {
     [SERVICE_PERSONALIZATION_STORAGE]: 'denied',
     [SERVICE_SECURITY_STORAGE]: 'denied',
     wait_for_update: 500,
-    region: ['AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU','IS','IE','IT','LV','LI','LT','LU','MT','NL','NO','PL','PT','RO','SK','SI','ES','SE']
-});
+    region: [
+        // EU Member States
+        'AT','BE','BG','HR','CY','CZ','DK','EE','FI','FR','DE','GR','HU',
+        'IE','IT','LV','LT','LU','MT','NL','PL','PT','RO','SK','SI','ES','SE',
+        // EEA countries
+        'IS','LI','NO',
+        // Non-EU countries
+        'CH','GB'
+    ]});
 gtag('consent', 'default', {
     [SERVICE_AD_STORAGE]: 'denied',
     [SERVICE_AD_USER_DATA]: 'denied',
@@ -321,22 +329,23 @@ const ccObj = {
         }
     };
 try {
-    async function getCloudflareJSON(endpoint) {
-        let data = await fetch(endpoint).then(res => res.text());
-        let arr = data.trim().split('\n').map(e => e.split('='));
-        let res = Object.fromEntries(arr);
-        return res.loc;
-    }
+    // async function getCloudflareJSON(endpoint) {
+    //     let data = await fetch(endpoint).then(res => res.text());
+    //     let arr = data.trim().split('\n').map(e => e.split('='));
+    //     let res = Object.fromEntries(arr);
+    //     return res.loc;
+    // }
 
-    let cntryCode;
-    await getCloudflareJSON('https://1.1.1.1/cdn-cgi/trace').then(data => (cntryCode = data));
-    let EEAregions = ['AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'GR', 'HU', 'IS', 'IE', 'IT', 'LV', 'LI', 'LT', 'LU', 'MT', 'NL', 'NO', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SE'];
+    // let cntryCode;
+    // await getCloudflareJSON('https://1.1.1.1/cdn-cgi/trace').then(data => (cntryCode = data));
+    // let EEAregions = ['AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'GR', 'HU', 'IS', 'IE', 'IT', 'LV', 'LI', 'LT', 'LU', 'MT', 'NL', 'NO', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SE'];
     // let noticeRegions = ['US','JP','CN','KR'];
     // let bannerType;
     // let dynamicMode = 'opt-in';
-    if (EEAregions.includes(cntryCode)) {
-        consentRun(WEBSITE_LOCALE, ccObj);
-    }
+    consentRun(WEBSITE_LOCALE, ccObj);
+    // if (EEAregions.includes(cntryCode)) {
+    //     consentRun(WEBSITE_LOCALE, ccObj);
+    // }
 } catch (e) {
     console.error(e);
     consentRun(WEBSITE_LOCALE, ccObj);
